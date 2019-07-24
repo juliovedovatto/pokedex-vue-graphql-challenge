@@ -22,11 +22,7 @@
 </template>
 
 <script lang="ts">
-  import gql from 'graphql-tag';
-
-  interface GenericObject {
-    [key: string]: any;
-  }
+  import { QUERY_POKEMONLIST } from '@/queries';
 
   export default {
     data() {
@@ -36,22 +32,7 @@
     },
 
     apollo: {
-      pokemonList: {
-        query: gql`query {
-            pokemons(first: 10) {
-              id
-              number
-              name
-              classification
-              types
-              image
-            }
-          }
-        `,
-        update: (data: GenericObject): GenericObject[] => {
-          return data.pokemons;
-        },
-      },
+      pokemonList: QUERY_POKEMONLIST(10),
     },
 
   };
@@ -125,7 +106,7 @@
       }
 
       .image {
-        height: 300px;
+        max-height: 300px;
       }
     }
     .card-details {
