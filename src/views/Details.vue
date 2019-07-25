@@ -1,18 +1,17 @@
 <template>
   <div>
-    <Details v-bind:number="$route.params.number" />
+    <CardDetails :id="$route.params.number" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import Details from '@/components/Details.vue';
+import CardDetails from '@/components/CardDetails.vue';
 
 @Component({
   components: {
-    Details,
+    CardDetails,
   },
 })
-
-export default class Home extends Vue {}
+export default class DetailsView extends Vue {}
 </script>

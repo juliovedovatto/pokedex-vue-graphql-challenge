@@ -24,24 +24,42 @@ export const QUERY_POKEMONLIST = (amount: number) => {
 };
 
 export const QUERY_POKEMONDETAILS = (id: string) => {
-  console.log('id => ', id);
   return {
     query: gql`query Details($id: String!) {
       pokemon(id: $id) {
         id
         number
         name
+        weight {
+          minimum
+          maximum
+        }
+        height {
+          minimum
+          maximum
+        }
         classification
         types
-        image
+        resistant
+        attacks {
+          fast {
+            name
+            type
+            damage
+          }
+          special {
+            name
+            type
+            damage
+          }
+        }
+        weaknesses
+        fleeRate
+        maxCP
+        maxHP
       }
     }`,
-    variables() {
-      return { id: id };
-    },
-    update: (data: GenericObject): GenericObject => {
-      return data.pokemon;
-    },
+    variables: { id },
   };
 };
 
