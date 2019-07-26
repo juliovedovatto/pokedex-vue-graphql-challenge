@@ -1,12 +1,355 @@
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
 
+@font-face {
+  font-family: 'RNS Sanz';
+  src: local('RNS Sanz Bold'), local('RNSSanz-Bold'),
+      url('~@/assets/fonts/RNSSanz-Bold.woff2') format('woff2'),
+      url('~@/assets/fonts/RNSSanz-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'RNS Sanz';
+  src: local('RNS Sanz Normal'), local('RNSSanz-Normal'),
+      url('~@/assets/fonts/RNSSanz-Normal.woff2') format('woff2'),
+      url('~@/assets/fonts/RNSSanz-Normal.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'RNS Sanz';
+  src: local('RNS Sanz Black'), local('RNSSanz-Black'),
+      url('~@/assets/fonts/RNSSanz-Black.woff2') format('woff2'),
+      url('~@/assets/fonts/RNSSanz-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+}
+
+.container {
+  padding: 30px 0;
+}
+.monster {
+  margin-bottom: 20px;
+}
+
+// POKEMON CARD -----------------------------------------------------------------------------------
+.pokemon-card {
+  position: relative;
+  transition: transform 0.2s cubic-bezier(0.5, 0.01, 0, 0.08);
+  will-change: transform; // telling to the element which property will change, increasing animation performance
+  pointer-events: auto;
+  margin: 0 auto;
+
+  &:hover {
+    $scaleSize: 1.08;
+
+    cursor: pointer;
+    transform: scale3d($scaleSize, $scaleSize, $scaleSize); // using 3d property variation to increase performance
+    z-index: 11;
+  }
+}
+.card-flip {
+  perspective: 1000px;
+  width: 346px;
+  height: 536px;
+
+  .card-flip-inner {
+    transition: transform 0.8s;
+    transform-style: preserve-3d; // this will force browser to preserve 3d animation, increasing performance and feedback
+    will-change: transform;   // telling to the element which property will change, increasing animation performance
+    pointer-events: auto;
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    &.flip {
+      transform: rotate3d(0, 1, 0, 180deg); // flip effect, using 3d property variation to increase performance
+    }
+
+    .flip-card-front, .flip-card-back {
+      backface-visibility: hidden; // to accomplish flip effect, we need to hide the "back" of the element
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+    }
+
+    .flip-card-back {
+      transform: rotate3d(0, 1, 0, 180deg); // flip back of card to hide its contents
+    }
+  }
+}
+.card-frame {
+  position: relative;
+  text-align: left;
+  width: 346px;
+  height: 536px;
+
+  &:before {
+    content: '';
+    background: url('~@/assets/images/pokedex-card-frame.png') no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 160px;
+    left: 46px;
+    background: url('~@/assets/images/pokedex-card-frame-glass.png') no-repeat;
+    width: 261px;
+    height: 174px;
+    z-index: 11;
+    mix-blend-mode: multiply;
+  }
+
+  .card-number {
+    position: absolute;
+    color: #fff;
+    top: 15px;
+    right: 15px;
+    z-index: 11;
+
+    h3 {
+      font-family: 'RNS Sanz', sans-serif;
+      font-weight: 900;
+    }
+  }
+
+  .card-picture {
+    position: absolute;
+    background: url('~@/assets/images/pokedex-card-frame-background.png') no-repeat;
+    text-align: center;
+    top: 166px;
+    left: 46px;
+    width: 260px;
+    height: 174px;
+    z-index: 9;
+
+    .image {
+      vertical-align: middle;
+       max-width: 261px;
+       max-height: 174px;
+       will-change: filter; // telling to the element which property will change, increasing animation performance
+
+       &.hidden {
+        filter: brightness(100) blur(15px);
+       }
+       &.show {
+        transition: 0.7s filter linear, 0.7s -webkit-filter linear;
+        filter: none;
+       }
+    }
+  }
+  .card-details {
+    position: absolute;
+    bottom: 62px;
+    left: 38px;
+    z-index: 11;
+    text-align: center;
+    width: 135px;
+    height: 36px;
+
+    .card-name {
+      font-family: 'RNS Sanz', sans-serif;
+      font-weight: 900;
+      margin: 6px 0 0;
+      vertical-align: middle;
+      font-size: 19px;
+    }
+  }
+}
+.pokemon-details {
+  .card {
+    width: 100%;
+    border-radius: 20px;
+
+    .card-header {
+      text-align: center;
+      border-radius: 20px 20px 0 0;
+      background: #e84761;
+
+      .sprite {
+        width: auto;
+      }
+      .card-name {
+        font-family: 'RNS Sanz', sans-serif;
+        font-weight: 900;
+        font-size: 25px;
+      }
+      .card-title {
+        font-family: 'RNS Sanz', sans-serif;
+        font-weight: 900;
+        font-size: 20px;
+      }
+    }
+    .card-body {
+      .card-subtitle {
+        margin: 0;
+        font-family: 'RNS Sanz', sans-serif;
+        font-weight: 900;
+      }
+
+      .details {
+        font-size: 14px;
+      }
+
+      .attack-section-title {
+        font-family: 'RNS Sanz', sans-serif;
+        font-weight: 900;
+        font-size: 17px;
+        font-weight: 700;
+        margin: 10px 0 5px;
+
+        &:first-of-type {
+          margin-top: 0;
+        }
+      }
+      .attacks-header {
+        font-size: 15px;
+        font-family: 'RNS Sanz', sans-serif;
+        font-weight: 900;
+      }
+      .attacks {
+        font-size: 13px;
+
+        .attack-title {
+          font-family: 'RNS Sanz', sans-serif;
+          font-weight: 900;
+        }
+        .attack-type {}
+        .attack-attack-damage {}
+      }
+    }
+     .card-footer {
+      border-radius: 0 0 20px 20px;
+
+       .footer-details {
+         font-size: 13px;
+
+         .details-title {
+          font-family: 'RNS Sanz', sans-serif;
+          font-weight: 900;
+          font-size: 13px;
+         }
+       }
+     }
+  }
+}
+// POKÉMON TYPES
+.badge-type {
+  margin-right: 5px;
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+
+  &-normal {
+    background-color: #A8A878;
+    border: 1px solid #6D6D4E;
+  }
+
+  &-fire {
+    background-color: #F08030;
+    border: 1px solid #9C531F;
+  }
+
+  &-water {
+    background-color: #6890F0;
+    border: 1px solid #445E9C;
+  }
+
+  &-electric {
+    background-color: #F8D030;
+    border: 1px solid #A1871F;
+  }
+
+  &-grass {
+    background-color: #78C850;
+    border: 1px solid #4E8234;
+  }
+
+  &-ice {
+    background-color: #98D8D8;
+    border: 1px solid #638D8D;
+  }
+
+  &-ground {
+    background-color: #E0C068;
+    border: 1px solid #927D44;
+  }
+
+  &-flying {
+    background-color: #A890F0;
+    border: 1px solid #6D5E9C;
+  }
+
+  &-ghost {
+    background-color: #705898;
+    border: 1px solid #493963;
+  }
+
+  &-rock {
+    background-color: #B8A038;
+    border: 1px solid #786824;
+  }
+
+  &-fighting {
+    background-color: #C03028;
+    border: 1px solid #7D1F1A;
+  }
+
+  &-poison {
+    background-color: #A040A0;
+    border: 1px solid #682A68;
+  }
+
+  &-psychic {
+    background-color: #F85888;
+    border: 1px solid #A13959;
+  }
+
+  &-bug {
+    background-color: #A8B820;
+    border: 1px solid #6D7815;
+  }
+
+  &-dark {
+    background-color: #705848;
+    border: 1px solid #49392F;
+  }
+
+  &-steel {
+    background-color: #B8B8D0;
+    border: 1px solid #787887;
+  }
+
+  &-dragon {
+    background-color: #7038F8;
+    border: 1px solid #4924A1;
+  }
+
+  &-fairy {
+    background-color: #EE99AC;
+    border: 1px solid #7D4D58;
+  }
+}
+// /POKEMON CARD ----------------------------------------------------------------------------------
 
 // VENDOR STYLES ----------------------------------------------------------------------------------
 .sprite {
   cursor: default !important;
   pointer-events: none;
-  
+
   &:focus,
   &:hover {
     outline: 0;

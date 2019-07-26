@@ -12,6 +12,10 @@
 </template>
 
 <script lang="ts">
+// Component related to the whole Pokémon card, callind extra components to build card.
+
+// this component is using classical component class approach in Vue, due his complexity
+
 import { GenericObject } from '../types/Generic';
 
 import { Component, Prop, Vue } from 'vue-property-decorator';
@@ -30,6 +34,11 @@ export default class Card extends Vue {
 
   private selected: boolean = false;
 
+  /**
+   * This method will flip the component, showing his "back".
+   * Component make use of CSS animations to acomplish that.
+   * @void
+   */
   private flipCard($e: Event) {
     $e.preventDefault();
 
@@ -38,8 +47,9 @@ export default class Card extends Vue {
     const $flip = $element.querySelector('.card-flip-inner') as HTMLElement;
     const $gif = $element.querySelector('.sprite') as HTMLButtonElement;
 
-    const isClickFromSpriteBtn = $target.classList.contains('.sprite') || $target.closest('.sprite')
-      || $target.parentNode === null || false;
+    // check the element clicked, due Giffer package it triggers the card flip
+    const isClickFromSpriteBtn = $target.classList.contains('.sprite')
+      || $target.closest('.sprite') || $target.parentNode === null || false;
 
     // check if flip board exists or if the event was triggered from a button (Giffer)
     if (!$flip || isClickFromSpriteBtn) {
@@ -62,6 +72,10 @@ export default class Card extends Vue {
     return false;
   }
 
+  /**
+   * This method will flip card when mouse leave the element.
+   * @void
+   */
   private flipCardLeave($e: Event) {
     const $element = $e.currentTarget as HTMLElement;
     const $flip = $element.querySelector('.card-flip-inner') as HTMLElement;
@@ -88,49 +102,6 @@ export default class Card extends Vue {
 </script>
 
 <style scoped lang="scss">
-.pokemon-card {
-  position: relative;
-  transition: transform 0.2s cubic-bezier(0.5, 0.01, 0, 0.08);
-  will-change: transform;
-  pointer-events: auto;
-
-  &:hover {
-    cursor: pointer;
-    transform: scale3d(1.2, 1.2, 1.2);
-    z-index: 11;
-  }
-}
-.card-flip {
-  perspective: 1000px;
-  width: 100%;
-  height: 505px;
-
-  .card-flip-inner {
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
-    will-change: transform;
-    pointer-events: auto;
-    position: relative;
-    width: 100%;
-    height: 100%;
-
-    &.flip {
-      transform: rotate3d(0, 1, 0, 180deg);
-    }
-
-    .flip-card-front, .flip-card-back {
-      backface-visibility: hidden;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 10;
-    }
-
-    .flip-card-back {
-      transform: rotate3d(0, 1, 0, 180deg);
-    }
-  }
-}
+// scoped style will work only for the component, avoiding overwriting something else
+// the only con is it won't work ok with dynamic elements, not created by Vue, like 3rd party libs.
 </style>
