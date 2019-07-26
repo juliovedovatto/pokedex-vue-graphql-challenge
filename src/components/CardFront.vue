@@ -1,12 +1,10 @@
 <template>
   <div class="card-frame" @click="$emit('select', pokemon.id)" v-if="pokemon">
     <div  class="card-number">
-      <h3>#{{ pokemon.number }}</h3>
+      <h3>{{ pokemon.number }}</h3>
     </div>
     <picture class="card-picture">
-      <lazy-component>
-        <b-img v-bind:src="`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokemon.number}.png`" v-bind:alt="pokemon.name" fluid class="image" />
-      </lazy-component>
+      <b-img-lazy v-bind:src="`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokemon.number}.png`" v-bind:alt="pokemon.name" fluid class="image" />
     </picture>
 
     <div class="card-details">

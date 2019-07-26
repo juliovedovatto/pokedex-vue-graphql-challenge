@@ -1,2 +1,19 @@
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
+
+
+// VENDOR STYLES ----------------------------------------------------------------------------------
+.sprite {
+  cursor: default !important;
+  pointer-events: none;
+  
+  &:focus,
+  &:hover {
+    outline: 0;
+  }
+
+  .gifffer-play-button {
+    display: none;
+  }
+}
+// /VENDOR STYLES ---------------------------------------------------------------------------------

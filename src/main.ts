@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
-import VueLazyload from 'vue-lazyload';
+import VueContentPlaceholders from 'vue-content-placeholders';
 
 import App from './App.vue';
 import apolloProvider from './apollo';
@@ -11,10 +11,7 @@ import './style.scss';
 Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);
-Vue.use(VueLazyload, {
-  lazyComponent: true,
-  observer: true,
-});
+Vue.use(VueContentPlaceholders);
 
 new Vue({
   router,

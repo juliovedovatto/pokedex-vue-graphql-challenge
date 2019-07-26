@@ -11,7 +11,6 @@ export const QUERY_POKEMONLIST = (amount: number) => {
         name
         classification
         types
-        image
       }
     }`,
     variables() {
